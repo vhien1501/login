@@ -16,8 +16,7 @@
                             <div class="row">
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <label style="font-size: 14px" class="col-sm-4 control-label">Welcome to HQ</label>
-                                        <asp:Label ID="lblUsers" runat="server" Font-Size="14px" CssClass="control-label col-sm-1"></asp:Label>
+                                            <asp:Label ID="lblUsers" runat="server" CssClass="control-label col-sm-6" style="font-size: 20px"></asp:Label>
                                     </div>
                                     <div class="form-group">
                                         <label id="lblFirstName" class="col-sm-4 control-label">First Name</label>
@@ -29,28 +28,28 @@
                                     <div class="form-group">
                                         <label id="lblLastName" class="col-sm-4 control-label">Last Name</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox ID="txtLastName" ClientIDMode="Static" CssClass="form-control input-sm" placeholder="Your Last Name" runat="server"> </asp:TextBox>
+                                            <asp:TextBox ID="txtLastName" ClientIDMode="Static" CssClass="form-control input-sm"  runat="server"> </asp:TextBox>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label id="lblEmail" class="col-sm-4 control-label">Email</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox ID="txtEmail" class="email" ClientIDMode="Static" CssClass="form-control input-sm" placeholder="hqgaming@abc.com" runat="server"> </asp:TextBox>
+                                            <asp:TextBox ID="txtEmail" class="email" ClientIDMode="Static" CssClass="form-control input-sm"  runat="server"> </asp:TextBox>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label id="lblDOB" class="col-sm-4 control-label">Date of Birth</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox ID="txtDOB" ClientIDMode="Static" CssClass="form-control" placeholder="Date of Birth" runat="server"> </asp:TextBox>
+                                            <asp:TextBox ID="txtDOB" ClientIDMode="Static" CssClass="form-control"  runat="server"> </asp:TextBox>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label id="lblPhone" class="col-sm-4 control-label">Phone Number</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox ID="txtPhone" ClientIDMode="Static" CssClass="form-control input-sm" placeholder="Your Tel-number" runat="server"> </asp:TextBox>
+                                            <asp:TextBox ID="txtPhone" ClientIDMode="Static" CssClass="form-control input-sm"  runat="server"> </asp:TextBox>
                                         </div>
                                     </div>
 
@@ -68,7 +67,7 @@
                                     <div class="form-group">
                                         <label id="lblLanguage" class="col-sm-4 control-label">Language</label>
                                         <div class="col-sm-4">
-                                            <asp:DropDownList ID="ddlLanguage" CssClass="form-control input-sm" runat="server">
+                                            <asp:DropDownList ID="ddlLanguage" CssClass="form-control input-md" runat="server">
                                                 <asp:ListItem Value="en">English </asp:ListItem>
                                                 <asp:ListItem Value="ko">Korean </asp:ListItem>
                                                 <asp:ListItem Value="vi">Vietnamese </asp:ListItem>
@@ -85,21 +84,21 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Current Password</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox type="password" class="form-control" ID="txtCurrentPassword" placeholder="input your current password" runat="server"></asp:TextBox>
+                                            <asp:TextBox type="password" class="form-control" ID="txtCurrentPassword"  runat="server"></asp:TextBox>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">New Password</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox type="password" class="form-control" ID="txtNewPassword" placeholder="input your new password" runat="server"></asp:TextBox>
+                                            <asp:TextBox type="password" class="form-control" ID="txtNewPassword" runat="server"></asp:TextBox>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Confirm Password</label>
                                         <div class="col-sm-4">
-                                            <asp:TextBox type="password" class="form-control" ID="txtConfirmPassword" placeholder="confirm your new password" runat="server"></asp:TextBox>
+                                            <asp:TextBox type="password" class="form-control" ID="txtConfirmPassword"  runat="server"></asp:TextBox>
                                         </div>
                                     </div>
 
@@ -140,10 +139,36 @@
 
 
 
+
             $.validator.addMethod("regex", function (value, element, regexp) {
                 var re = new RegExp(regexp);
                 return this.optional(element) || re.test(value);
             }, "Only characters from A-Z");
+
+
+
+            $('#txtFirstName').rules('add', {
+                required: true,
+                messages: {
+                    required: "First name is required."
+                }
+            });
+
+
+            $('#txtLastName').rules('add', {
+                required: true,
+                messages: {
+                    required: "Last name is required."
+                }
+            });
+
+            $('#txtDOB').rules('add', {
+                required: true,
+                messages: {
+                    required: "DOB is required."
+                }
+            });
+
 
 
             $('#txtPhone').rules('add', {

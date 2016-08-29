@@ -95,9 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="assets\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="assets\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="assets\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -179,21 +176,22 @@
     <Content Include="assets\js\metisMenu.min.js" />
     <Content Include="assets\js\moment-duration-format.js" />
     <Content Include="assets\js\moment-with-locales.min.js" />
-    <Content Include="login.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
     <Content Include="scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppCode\Config.cs" />
     <Compile Include="AppCode\DITHelper.cs" />
     <Compile Include="AppCode\DITUsers.cs" />
-    <Compile Include="login.aspx.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="login.aspx.designer.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>

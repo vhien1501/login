@@ -11,7 +11,9 @@ namespace changeprofile_masterpage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["hq_user"] == null) {
+                Response.Redirect("login.aspx");
+            }
         }
     }
 }

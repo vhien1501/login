@@ -7,131 +7,34 @@ using DIT;
 
 namespace DIT
 {
-
-    public class HQUsersItem
+    public class HQUserItem
     {
-        private static string login;
-        private static string firstname;
-        private static string lastname;
-        private static string phone;
-        private static string email;
-        private static int gender;
-        private static string dob;
-        private static string language;
+        public int ID;
+        public string FirstName;
+        public string LastName;
+        public string Email;
+        public string Username;
+        public string Password;
+        public DateTime Birthday;
+        public int Gender;
+        public string Phone;
+        public String PreferedLanguage;
+        public string VerificationCode;
+        public DateTime VerificationExpiry;
+        public Int64 Hours;
+        public Int64 BonusHours;
+        public DateTime Created;
+        public string SignUpRef;
 
-        public static string Login
-        {
-            get
-            {
-                return login;
-            }
-
-            set
-            {
-                login = value;
-            }
-        }
-
-        public static string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
-
-            set
-            {
-                firstname = value;
-            }
-        }
-
-        public static string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-
-            set
-            {
-                lastname = value;
-            }
-        }
-
-        public static string Phone
-        {
-            get
-            {
-                return phone;
-            }
-
-            set
-            {
-                phone = value;
-            }
-        }
-
-        public static string Email
-        {
-            get
-            {
-                return email;
-            }
-
-            set
-            {
-                email = value;
-            }
-        }
-
-        public static int Gender
-        {
-            get
-            {
-                return gender;
-            }
-
-            set
-            {
-                gender = value;
-            }
-        }
-
-        public static string Dob
-        {
-            get
-            {
-                return dob;
-            }
-
-            set
-            {
-                dob = value;
-            }
-        }
-
-        public static string Language
-        {
-            get
-            {
-                return language;
-            }
-
-            set
-            {
-                language = value;
-            }
-        }
     }
+
 
     public class DITUsers
     {
         private static string ConnectionString = "Server=192.168.1.19;Initial Catalog=dev;user id=user;Password=1";
-
-
-
-        public static void GetUsersByLogin(string username)
+        public static HQUserItem GetUsersByLogin(string username)
         {
+            HQUserItem item = new HQUserItem();
             SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
 
@@ -143,26 +46,31 @@ namespace DIT
             {
                 while (reader.Read())
                 {
-                    HQUsersItem.Login = reader["login"].ToString();
-                    HQUsersItem.Firstname = reader["first_name"].ToString();
-                    HQUsersItem.Lastname = reader["last_name"].ToString();
-                    HQUsersItem.Phone = reader["mobile"].ToString();
-                    HQUsersItem.Email = reader["email"].ToString();
+                    
+                    item.Username = reader["login"].ToString();
+                    item.FirstName = reader["first_name"].ToString();
+                    item.LastName = reader["last_name"].ToString();
+                    item.Phone = reader["mobile"].ToString();
+                    item.Email = reader["email"].ToString();
 
                     if (!reader.IsDBNull(reader.GetOrdinal("gender")))
-                        HQUsersItem.Gender = Convert.ToInt32(reader["gender"]);
+                        item.Gender = Convert.ToInt32(reader["gender"]);
                     if (!reader.IsDBNull(reader.GetOrdinal("dob")))
-                        HQUsersItem.Dob = Convert.ToDateTime(reader["dob"]).ToString("dd/MM/yyyy");
+                        item.Birthday = Convert.ToDateTime(reader["dob"]);
 
-                    HQUsersItem.Language = reader["lang"].ToString().ToLower();
+                    item.PreferedLanguage = reader["lang"].ToString().ToLower();
 
                 }
             }
             connection.Close();
+            return item;
         }
+      
 
-        public static bool SetData(string Login, string FirstName, string LastName, string Phone, string Email, int Gender, string DOB, string Language)
+        public static bool SetData(HQUserItem item)
         {
+           
+            
             try
             {
                 SqlConnection connection = new SqlConnection(ConnectionString);
@@ -173,87 +81,87 @@ namespace DIT
                 SqlCommand cmd = new SqlCommand(updateQuery, connection);
 
 
-                if (Login == "")
+                if (item.Username == "")
                 {
                     cmd.Parameters.AddWithValue("@login", DBNull.Value);
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@login", Login);
+                    cmd.Parameters.AddWithValue("@login", item.Username);
                 }
 
 
-                if (FirstName == "")
+                if (item.FirstName == "")
                 {
                     cmd.Parameters.AddWithValue("@first_name", DBNull.Value);
                 }
 
                 else
                 {
-                    cmd.Parameters.AddWithValue("@first_name", FirstName);
+                    cmd.Parameters.AddWithValue("@first_name", item.FirstName);
                 }
 
 
-                if (LastName == "")
+                if (item.LastName == "")
                 {
                     cmd.Parameters.AddWithValue("@last_name", DBNull.Value);
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@last_name", LastName);
+                    cmd.Parameters.AddWithValue("@last_name", item.LastName);
                 }
 
-                if (Email == "")
+                if (item.Email == "")
                 {
                     cmd.Parameters.AddWithValue("@email", DBNull.Value);
                 }
                 else
                 {
-                    if (CheckEmail(Email, Login))
+                    if (CheckEmail(item.Email, item.Username))
                     {
                     }
 
-                    else if (Regex.Match(Email, @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                    else if (Regex.Match(item.Email, @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                     @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$").Success)
                     {
-                        cmd.Parameters.AddWithValue("@email", Email);
+                        cmd.Parameters.AddWithValue("@email", item.Email);
                     }
                 }
-                if (DOB == "")
+                if (item.Birthday==null)
                 {
                     cmd.Parameters.AddWithValue("@dob", DBNull.Value);
                 }
                 else
                 {
-                    DateTime dob = Convert.ToDateTime(DOB);
-                    cmd.Parameters.AddWithValue("@dob", dob);
+                  
+                    cmd.Parameters.AddWithValue("@dob", item.Birthday);
                 }
 
-                if (Phone == "")
+                if (item.Phone == "")
                 {
                     cmd.Parameters.AddWithValue("@mobile", DBNull.Value);
                 }
-                else if (Regex.Match(Phone, @"^([0-9]{9,15})$").Success)
+                else if (Regex.Match(item.Phone, @"^([0-9]{9,15})$").Success)
                 {
-                    cmd.Parameters.AddWithValue("@mobile", Phone);
+                    cmd.Parameters.AddWithValue("@mobile", item.Phone);
                 }
 
-                if (Gender == 0)
+                if (item.Gender == 0)
                 {
                     cmd.Parameters.AddWithValue("@gender", DBNull.Value);
                 }
-                else if (Gender != 0)
+                else if (item.Gender != 0)
                 {
-                    cmd.Parameters.AddWithValue("@gender", Gender);
+                    cmd.Parameters.AddWithValue("@gender", item.Gender);
                 }
 
-                if (Language == "")
+                if (item.PreferedLanguage == "")
                 {
                     cmd.Parameters.AddWithValue("@lang", DBNull.Value);
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@lang", Language);
+                    cmd.Parameters.AddWithValue("@lang", item.PreferedLanguage);
                 }
 
                 cmd.ExecuteNonQuery();
@@ -353,6 +261,42 @@ namespace DIT
             }
             return false;
         }
+
+        public static bool CheckUsernameAndPassword(string username, string password)
+        {
+            using (SqlConnection connection = new SqlConnection(Config.ConnectionString))
+            {
+                connection.Open();
+
+                string sql = "SELECT password,salt FROM users WHERE login=@login";
+
+                SqlCommand cmd = new SqlCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@login", username);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        string salt = reader["salt"].ToString();
+
+                        password = DITUsers.GenerateHash(password, salt);
+
+                        if (reader["password"].ToString() == password)
+                        {
+                            return true;
+                        }
+
+
+                    }
+                }
+            }
+            return false;
+        }
+
+
         #region Security
         public static string GenerateSalt(int length)
         {
@@ -393,4 +337,6 @@ namespace DIT
         }
         #endregion
     }
+
+   
 }

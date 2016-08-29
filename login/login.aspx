@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="login.login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="login.login" %>
 
 <!DOCTYPE html>
 
@@ -53,20 +53,20 @@
                                         <div class="row">
                                             <div class="form-horizontal">
                                                 <div class="form-group">
-                                                    <label class="col-sm-4 control-label">Username</label>
+                                                    <label class="col-sm-4 control-label" for="txtID">Username</label>
                                                     <div class="col-sm-4">
                                                         <asp:TextBox CssClass="form-control" ID="txtID" runat="server"></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-4 control-label">Password</label>
+                                                    <label class="col-sm-4 control-label" for="txtPassword">Password</label>
                                                     <div class="col-sm-4">
-                                                        <asp:TextBox CssClass="form-control" ID="txtPassword" runat="server" type="password"></asp:TextBox>
+                                                        <asp:TextBox CssClass="form-control" ID="txtPassword" runat="server" type="password" ClientIDMode="Static"></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-offset-5 col-sm-2">
-                                                        <asp:Button CssClass="btn btn-info" type="submit" ID="btnLogin" runat="server" Text="Sign in" OnClick="btnLogin_Click"/>
+                                                        <asp:Button CssClass="btn btn-info" ID="btnLogin" runat="server" Text="Sign In" OnClick="btnLogin_Click"/>
                                                     </div>
                                                 </div>
                                             </div>
